@@ -1,0 +1,21 @@
+{
+  "name": "proj-alpha-backend",
+  "version": "1.0.0",
+  "description": "nodejs based  backend api hosted in lambda passed via api-gateway deployed using serverless framework",
+  "main": "handler.js",
+  "scripts": {
+    "locally": "serverless offline",
+    "devly": "serverless deploy",
+    "globally": "serverless deploy -s PRODU"
+  },
+  "author": "sandipan",
+  "license": "ISC",
+  "devDependencies": {
+    "serverless-offline": "^11.6.0"
+  },
+  "dependencies": {
+    "moment": "^2.29.4",
+    "underscore": "^1.13.6",
+    "uuid": "^9.0.0"
+  }
+}
