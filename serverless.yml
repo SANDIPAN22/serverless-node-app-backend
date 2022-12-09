@@ -50,10 +50,10 @@ resources:
           - AttributeName: task_author
             AttributeType: S
         KeySchema:
-          - AttributeName: task_id
-            KeyType: RANGE 
           - AttributeName: task_author
             KeyType: HASH
+          - AttributeName: task_id
+            KeyType: RANGE 
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
