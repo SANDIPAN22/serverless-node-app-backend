@@ -24,7 +24,7 @@ provider:
   timeout: 5
   memorySize: 128
   environment:
-    DYNAMO_TABLE: ${self:service}-table-${opt:stage, self:provider.stage}
+    DYNAMO_TABLE: ${self:service}-table-v2-${opt:stage, self:provider.stage}
   iam:
     role:
       statements: 
