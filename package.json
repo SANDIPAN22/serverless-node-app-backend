@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "moment": "^2.29.4",
+    "serverless-plugin-ifelse": "^1.0.7",
     "underscore": "^1.13.6",
     "uuid": "^9.0.0"
   }

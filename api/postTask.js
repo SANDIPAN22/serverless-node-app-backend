@@ -25,7 +25,7 @@ module.exports.handle = async (event) => {
   else{
     var data = {
       task_id : uuid.v4(),
-      task_author,
+      task_author: event.requestContext.authorizer.claims.sub == undefined ? "ghost-dev": event.requestContext.authorizer.claims.sub,
       task_name,
       task_description,
       task_other_info : task_other_info,
@@ -71,3 +71,29 @@ module.exports.handle = async (event) => {
 
 
 };
+
+// "requestContext": {
+//   "resourceId": "dcchxw",
+//   "authorizer": {
+//       "claims": {
+//           "at_hash": "qFvNUyo26SlMokL9N_oOoQ",
+//           "sub": "fe446562-7e1e-45be-95a3-8b4264728a7b",
+//           "email_verified": "true",
+//           "iss": "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_EKDKvEztJ",
+//           "cognito:username": "fe446562-7e1e-45be-95a3-8b4264728a7b",
+//           "aud": "525f77r61i371bsuvhipsfds3v",
+//           "event_id": "70f668e9-7d05-4464-b77d-bb85bcc4bd49",
+//           "token_use": "id",
+//           "auth_time": "1670597527",
+//           "nickname": "sandi",
+//           "exp": "Fri Dec 09 15:02:07 UTC 2022",
+//           "iat": "Fri Dec 09 14:52:07 UTC 2022",
+//           "jti": "4a3e1edf-6512-4249-a293-4f84b302c6cb",
+//           "email": "chak.sandipan22@gmail.com"
+//       }
+//   },
+
+
+// var token = new URL("http://localhost:3000/_oauth/google#access_token=ya29.5HxuYol1Io8JLeGePDznbfkkwu_PC4uodKwG8_1clFYAn9AgdOV1WGpOTNQP3s76HAsn7Y4zWw&token_type=Bearer&expires_in=3600").hash.split('&').filter(function(el) { if(el.match('access_token') !== null) return true; })[0].split('=')[1];
+
+// alert(token);

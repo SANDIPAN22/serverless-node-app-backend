@@ -4,6 +4,17 @@ frameworkVersion: '3'
 
 plugins:
   - serverless-offline
+  - serverless-plugin-ifelse
+
+custom:
+  currentStage: ${opt:stage, self:provider.stage}
+  serverlessIfElse:
+    - If: '"${self:custom.currentStage}" == "dev"'
+      Exclude:
+        - functions.postTask.events.0.http.authorizer
+        - functions.getAllTask.events.0.http.authorizer
+        - functions.getTask.events.0.http.authorizer
+        - functions.deleteTask.events.0.http.authorizer
 
 provider:
   name: aws
@@ -36,12 +47,21 @@ resources:
         AttributeDefinitions:
           - AttributeName: task_id
             AttributeType: S
+          - AttributeName: task_author
+            AttibuteName: S
         KeySchema:
           - AttributeName: task_id
-            KeyType: HASH 
+            KeyType: RANGE 
+          - AttributeName: task_author
+            KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
+        
+              
+
+
+        
 
 
 
@@ -53,6 +73,9 @@ functions:
           path: /posttask
           method: post
           cors: true
+          authorizer:
+            name: auth
+            arn: arn:aws:cognito-idp:us-east-1:380653978671:userpool/us-east-1_EKDKvEztJ
 
   getAllTask:
     handler: api/getAllTask.handle
@@ -61,6 +84,9 @@ functions:
           path: /getall
           method: get
           cors: true
+          authorizer:
+            name: auth
+            arn: arn:aws:cognito-idp:us-east-1:380653978671:userpool/us-east-1_EKDKvEztJ
 
   getTask:
     handler: api/getTask.handle
@@ -69,6 +95,9 @@ functions:
           path: /get/{task_id}
           cors: true
           method: get
+          authorizer:
+            name: auth
+            arn: arn:aws:cognito-idp:us-east-1:380653978671:userpool/us-east-1_EKDKvEztJ
 
   deleteTask:
     handler: api/deleteTask.handle
@@ -77,6 +106,9 @@ functions:
           path: /deleteTask/{task_id}
           cors: true
           method: delete
+          authorizer:
+            name: auth
+            arn: arn:aws:cognito-idp:us-east-1:380653978671:userpool/us-east-1_EKDKvEztJ
 
 
 

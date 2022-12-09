@@ -9,6 +9,10 @@ module.exports.handle = async (event) => {
 
 
     var params = {
+      Key: {
+        "task_author": event.requestContext.authorizer.claims.sub == undefined ? "ghost-dev": event.requestContext.authorizer.claims.sub,
+
+      },
       TableName: process.env.DYNAMO_TABLE,
     }
 
@@ -16,14 +20,14 @@ module.exports.handle = async (event) => {
 
       // get all the objects inside of the dynamoDB 
 
-      var data = await ddb.scan(params).promise()
+      var data = await ddb.get(params).promise()
 
       return {
         
         statusCode: 200,
         headers: {"Access-Control-Allow-Origin": "*"},
         body: JSON.stringify({
-          api_version: 3.0,
+          api_version: 5.0,
           message: data
           
         })

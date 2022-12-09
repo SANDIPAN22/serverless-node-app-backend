@@ -28,6 +28,8 @@ module.exports.handle = async (event) => {
     var params = {
       TableName: process.env.DYNAMO_TABLE,
       Key: {
+        "task_author": event.requestContext.authorizer.claims.sub == undefined ? "ghost-dev": event.requestContext.authorizer.claims.sub,
+
         "task_id": task_id
       }
 
