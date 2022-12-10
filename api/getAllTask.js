@@ -13,13 +13,15 @@ module.exports.handle = async (event) => {
   }
 
 
-    var params = {
-      Key: {
-        "task_author": auth,
-
-      },
-      TableName: process.env.DYNAMO_TABLE,
-    }
+  var params = 
+  {
+  ExpressionAttributeValues: {
+':auth': auth
+},
+  KeyConditionExpression: 'task_author = :auth',
+  TableName: process.env.DYNAMO_TABLE,
+  ProjectionExpression : "task_id, task_name"
+}
 
     try{
 
