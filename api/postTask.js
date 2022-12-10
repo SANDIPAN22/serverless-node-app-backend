@@ -23,9 +23,15 @@ module.exports.handle = async (event) => {
     }
   }
   else{
+    try {
+      var auth = event.requestContext.authorizer.claims.sub
+      
+    } catch (error) {
+      var auth = "ghost-dev"
+    }
     var data = {
       task_id : uuid.v4(),
-      task_author: event.requestContext.authorizer.claims.sub == undefined ? "ghost-dev": event.requestContext.authorizer.claims.sub,
+      task_author: auth,
       task_name,
       task_description,
       task_other_info : task_other_info,

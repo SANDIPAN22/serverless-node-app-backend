@@ -5,12 +5,17 @@ const ddb = new AWS.DynamoDB.DocumentClient()
 
 module.exports.handle = async (event) => {
   
-
+  try {
+    var auth = event.requestContext.authorizer.claims.sub
+    
+  } catch (error) {
+    var auth = "ghost-dev"
+  }
 
 
     var params = {
       Key: {
-        "task_author": event.requestContext.authorizer.claims.sub == undefined ? "ghost-dev": event.requestContext.authorizer.claims.sub,
+        "task_author": auth,
 
       },
       TableName: process.env.DYNAMO_TABLE,
@@ -27,7 +32,7 @@ module.exports.handle = async (event) => {
         statusCode: 200,
         headers: {"Access-Control-Allow-Origin": "*"},
         body: JSON.stringify({
-          api_version: 5.0,
+          api_version: 5.5,
           message: data
           
         })

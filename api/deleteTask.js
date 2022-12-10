@@ -24,11 +24,16 @@ module.exports.handle = async (event) => {
     }
   }
   else{
-
+    try {
+      var auth = event.requestContext.authorizer.claims.sub
+      
+    } catch (error) {
+      var auth = "ghost-dev"
+    }
     var params = {
       TableName: process.env.DYNAMO_TABLE,
       Key: {
-        "task_author": event.requestContext.authorizer.claims.sub == undefined ? "ghost-dev": event.requestContext.authorizer.claims.sub,
+        "task_author": auth,
 
         "task_id": task_id
       }
