@@ -25,7 +25,7 @@ module.exports.handle = async (event) => {
 
       // get all the objects inside of the dynamoDB 
 
-      var data = await ddb.get(params).promise()
+      var data = await ddb.query(params).promise()
 
       return {
         
